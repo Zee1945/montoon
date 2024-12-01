@@ -14,6 +14,14 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/admin', function () {
+    return 'Hi admin';
+})->middleware(['auth', 'verified','role:admin']);
+
+Route::get('/user', function () {
+    return 'Hi user';
+})->middleware(['auth', 'verified','role:user']);
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

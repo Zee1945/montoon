@@ -14,6 +14,8 @@ Route::get('/', function () {
     ]);
 });
 
+Route::redirect('/','/prototype/login');
+
 Route::get('/admin', function () {
     return 'Hi admin';
 })->middleware(['auth', 'verified','role:admin']);
@@ -25,6 +27,18 @@ Route::get('/user', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::prefix('prototype')->name('prototype.')->group(function(){
+    Route::get('/login',function(){
+        return Inertia::render('Prototype/Login');
+        // return Inertia::render('Prototype/Login');
+
+    })->name('login');
+    Route::get('/register',function(){
+        return Inertia::render('Prototype/Register');
+        return 'Hello Register';
+    })->name('register');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

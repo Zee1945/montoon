@@ -1,8 +1,19 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import PropTypes from 'prop-types';
 
-export default forwardRef(function TextInput(
-    { type = 'text', className = '', isFocused = false, ...props },
-    ref,
+const TextInput = forwardRef(function TextInput(
+    {
+        type = 'text',
+        className = '',
+        defaultValue,
+        variant = "primary",
+        placeholder,
+        isError =false,
+        isFocused = false,
+        name, value, autoComplete, required, handleChange,
+        ...props
+    },
+    ref
 ) {
     const localRef = useRef(null);
 
@@ -20,11 +31,38 @@ export default forwardRef(function TextInput(
         <input
             {...props}
             type={type}
+            name={name}
+            value={value}
+            defaultValue={defaultValue}
+            autoComplete={autoComplete}
             className={
-                'rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ' +
-                className
+                `rounded-2xl bg-form-bg py-[13px] px-7 w-full ${isError && "input-error"} input-${variant} ${className}`
             }
+            placeholder={placeholder}
             ref={localRef}
+            required={required}
+            onChange={(e) => handleChange(e)}
         />
     );
 });
+
+// Defining PropTypes for TextInput component
+TextInput.propTypes = {
+    type: PropTypes.oneOf(["text", "email", "password", "number", "file"]),
+    name: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    className: PropTypes.string,
+    variant: PropTypes.oneOf(["primary", "error", "primary-outline"]),
+    autoComplete: PropTypes.string,
+    required: PropTypes.bool,
+    isFocused: PropTypes.bool,
+    handleChange: PropTypes.func,
+    isError: PropTypes.bool,
+};
+
+function handleChange(e){
+    return ''
+}
+
+export default TextInput;

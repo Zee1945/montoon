@@ -10,6 +10,7 @@ const TextInput = forwardRef(function TextInput(
         placeholder,
         isError =false,
         isFocused = false,
+        onChange='',
         name, value, autoComplete, required, handleChange,
         ...props
     },
@@ -26,7 +27,10 @@ const TextInput = forwardRef(function TextInput(
             localRef.current?.focus();
         }
     }, [isFocused]);
-
+    function handleChange(e){
+        const newValue = e.target.value;
+        setValue(newValue);
+    }
     return (
         <input
             {...props}
@@ -41,7 +45,7 @@ const TextInput = forwardRef(function TextInput(
             placeholder={placeholder}
             ref={localRef}
             required={required}
-            onChange={(e) => handleChange(e)}
+            onChange={onChange}
         />
     );
 });
@@ -61,8 +65,6 @@ TextInput.propTypes = {
     isError: PropTypes.bool,
 };
 
-function handleChange(e){
-    return ''
-}
+
 
 export default TextInput;

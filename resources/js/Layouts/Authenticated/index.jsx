@@ -1,6 +1,6 @@
 import SidebarComponent from "./SidebarComponent"
 import TopbarComponent from "./TopbarComponent"
-export default function AuthenticatedHandle({children}){
+export default function AuthenticatedHandle({auth,children}){
     return <>
         <div className="mx-auto max-w-screen hidden lg:block">
             {/* Start Sidebar  */}
@@ -10,7 +10,7 @@ export default function AuthenticatedHandle({children}){
                  <div className="ml-[300px] px-[50px]">
                     <div className="py-10 flex flex-col gap-[50px]">
                         {/* Start Topbar */}
-                        <TopbarComponent/>
+                        <TopbarComponent name={auth.user.name}/>
                         {/* End Topbar */}
                         <main>
                             {children}
